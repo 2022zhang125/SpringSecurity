@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: security01
+  security:
+    # \u5982\u679C\u6CA1\u6709\u7279\u5B9A\u7ED9\u7684\u8BDD\uFF0C\u9ED8\u8BA4\u4E3A <user,UUID>
+    user:
+      name: user
+      password: 111111
