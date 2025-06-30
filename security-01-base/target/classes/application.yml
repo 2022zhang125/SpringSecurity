@@ -1,8 +1,8 @@
 spring:
   application:
-    name: security01
+    name: security-01-base
   security:
-    # \u5982\u679C\u6CA1\u6709\u7279\u5B9A\u7ED9\u7684\u8BDD\uFF0C\u9ED8\u8BA4\u4E3A <user,UUID>
+    # 如果没有自己设定账号和密码，则会自动生成一个 <user,UUID.randomUUID()>的默认账号密码
     user:
       name: user
       password: 111111
