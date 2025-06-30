@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
                 .username(tUser.getLoginAct())
                 .password(tUser.getLoginPwd())
                 .authorities(AuthorityUtils.NO_AUTHORITIES) // 空权限，EmptyList
+                // .accountExpired(true) 账号已过期
                 .build();
         return userDetails;
     }

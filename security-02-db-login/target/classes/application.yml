@@ -11,6 +11,5 @@ spring:
 
 mybatis:
   configuration:
-    # \u5F00\u542F\u9A7C\u5CF0\u6620\u5C04
     map-underscore-to-camel-case: true
   type-aliases-package: cn.believesun.pojo
