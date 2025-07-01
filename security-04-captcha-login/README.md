@@ -218,3 +218,33 @@ public class CaptchaController {
 }
 ```
 
+
+
+---
+
+
+
+# 加密与解密
+
+> 主要是`SpringSecurity`中对 BCryptPasswordEncoder 类的学习
+
+- 加密流程
+
+用户输入密码通过 BCryptPasswordEncoder的encode方法进行加密操作。
+
+密文格式：密码版本号 + salt盐值 + 用户的密码 = 密文
+
+由于salt的完全随机，所以每次生成的密文都是不同的，就算用户密码相同都不行。
+
+- 解密流程
+
+> $10$WEkWUvuJOV/q7lRXzmdvgulskx8EhLPU8N.hdnfNyk.AYqYSPwYHa
+
+用户提供密码 + 系统从数据库获取salt盐值（盐值为22位） `WEkWUvuJOV/q7lRXzmdvgu`  = 密文
+
+由于盐值和密文都是相同的，那么得到的 字符串（加密后的密文）也是相同的，因此可以匹配上
+
+- 综上所述
+
+只要 明文密码 + 盐值 一样，那么得到的密文必定相同！！！
+
