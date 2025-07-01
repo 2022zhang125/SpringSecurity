@@ -10,5 +10,4 @@ public class CaptchaLoginApplication {
     public static void main(String[] args) {
         SpringApplication.run(CaptchaLoginApplication.class, args);
     }
-
 }
