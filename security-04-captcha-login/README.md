@@ -1,6 +1,6 @@
 # Security-04-captcha-login
 
-**验证码登录，具体实现**
+# **验证码登录，具体实现**
 
 > 注册时，显示验证码登录。这里使用到 Hutool包 来生成验证码图片。
 
@@ -140,6 +140,81 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity){
             .anyRequest().authenticated(); // 对所有的请求都进行认证
         }
         .build();
+}
+```
+
+
+
+---
+
+
+
+# 自定义验证码
+
+实现一下接口即可
+
+```java
+public interface CodeGenerator extends Serializable {
+    String generate();
+
+    boolean verify(String var1, String var2);
+}
+```
+
+具体实现如下
+
+```java
+package cn.believesun.captcha;
+
+import cn.hutool.captcha.generator.CodeGenerator;
+import org.springframework.stereotype.Component;
+
+import java.util.Random;
+
+@Component
+public class MyCodeGenerator implements CodeGenerator {
+    @Override
+    public String generate() {
+        // 生成一个四位数的验证码
+        String code = String.valueOf(1000 + new Random().nextInt(9000));
+        return code;
+    }
+
+    @Override
+    public boolean verify(String s, String s1) {
+        return false;
+    }
+}
+```
+
+```java
+package cn.believesun.controller;
+
+import cn.believesun.captcha.MyCodeGenerator;
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.ICaptcha;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.io.IOException;
+
+@Controller
+public class CaptchaController {
+
+    @Autowired
+    private MyCodeGenerator generator;
+
+    @GetMapping("/common/captcha")
+    public void generateController(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        ICaptcha captcha = CaptchaUtil.createCircleCaptcha(120, 20, generator, 10);
+        response.setContentType("image/jpeg");
+        System.out.println("CaptchaCode = " + captcha.getCode());
+        request.getSession().setAttribute("captcha", captcha.getCode());
+        captcha.write(response.getOutputStream());
+    }
 }
 ```
 
