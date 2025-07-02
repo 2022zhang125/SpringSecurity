@@ -44,4 +44,4 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
     返回Filter中检查Password，调用this.passwordEncoder.match()去匹配 明文和密文。
     this.addititonalAuthentication(user,(UsernamePasswordAuthentication) authentication)
     
-    
+    @JsonIgnore 忽略jackson的返回字段
