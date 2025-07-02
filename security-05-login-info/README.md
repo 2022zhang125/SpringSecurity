@@ -106,8 +106,8 @@ public class UserServiceImpl implements UserService {
 - **@JsonFormat**
   - 该注解可以自定义时间的显示格式。
   - 属性 pattern = "yyyy-MM-dd HH:mm:ss SSS" 修改格式
-  - 属性 timeZone = "GTM+8" 修改为东八区显示（现在好像默认是东八区）
-
+  - 属性 timezone = "GTM+8" 修改为东八区显示（现在好像默认是东八区）
+  - 或者在配置文件中直接指定，这样就不用一直写了。
 
 
 ---
