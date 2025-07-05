@@ -25,7 +25,7 @@ public class ClueController {
     public String clueMenu(){
         return "ClueMenu";
     }
-
+ 
     @GetMapping("/api/clue/child")
     @PreAuthorize("hasAnyAuthority('saler','admin')") // 只有 saler 和admin 能访问
     public String clueChild(){
