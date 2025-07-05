@@ -9,11 +9,11 @@ public class ClueController {
     /**
      * 线索管理
      * 线索管理
-     * 线索管理-列表
-     * 线索管理-录入
-     * 线索管理-编辑
-     * 线索管理-查看
-     * 线索管理-导入
+     * 线索管理-列表 clue:list
+     * 线索管理-录入 clue:add
+     * 线索管理-编辑 clue:edit
+     * 线索管理-查看 clue:view
+     * 线索管理-导入 clue:import
      */
     @GetMapping("/api/index")
     public String index() {
@@ -21,19 +21,19 @@ public class ClueController {
     }
 
     @GetMapping("/api/clue/menu")
-    @PreAuthorize("hasAuthority('saler')") // 只有 saler 能访问
     public String clueMenu(){
         return "ClueMenu";
     }
 
     @GetMapping("/api/clue/child")
-    @PreAuthorize("hasAnyAuthority('saler','admin')") // 只有 saler 和admin 能访问
     public String clueChild(){
         return "ClueChild";
     }
 
     @GetMapping("/api/list")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('clue:list')")
+    // 总而言之，言而总之，角色权限控制时，在add集合时添加ROLE_ 前缀并且PreAuthorize中使用hasRole;
+    // 资源权限控制时，不添加ROLE_前缀，使用PreAuthorize的hasAuthority即可。
     public String clueList(){
         return "clueList";
     }

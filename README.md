@@ -45,3 +45,17 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
     this.addititonalAuthentication(user,(UsernamePasswordAuthentication) authentication)
     
     @JsonIgnore 忽略jackson的返回字段
+
+## 注意事项
+     - 总而言之，言而总之，角色权限控制时，在add集合时添加ROLE_ 前缀并且PreAuthorize中使用hasRole;
+        - 资源权限控制时，不添加ROLE_前缀，使用PreAuthorize的hasAuthority即可。
+     - SpringBoot脚手架自动生成的Lombok依赖有问题，记得换成以下格式，不然用不了
+     ```xml
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.32</version>
+            <scope>provided</scope>
+        </dependency>
+     ```
