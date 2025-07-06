@@ -12,7 +12,7 @@
        没有配置密码加密器
     解决方法：
         在配置类中用@Bean注解标注一个返回值为PasswordEncoder的方法，其会new一个BCryptPasswordEncoder的实现类。
-
+    
     问题：在配置了自定义登录界面后，SpringSecurity的功能失效了！！！
     解决方法：在配置类中手动将功能加回来，同时**屏蔽SpringSecurity对登录页请求的拦截**
 ```java
@@ -35,7 +35,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
             .build();
 }
 ```
-    
+
 ## 框架分析
     UsernamePasswordAuthenticationFilter            (接收密码)
     调用 loadUserByUsername(String username)         (查询数据库根据用户名，并将其封装为UserDetails对象返回给SpringSecurity框架)
@@ -47,15 +47,17 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
     @JsonIgnore 忽略jackson的返回字段
 
 ## 注意事项
-     - 总而言之，言而总之，角色权限控制时，在add集合时添加ROLE_ 前缀并且PreAuthorize中使用hasRole;
-        - 资源权限控制时，不添加ROLE_前缀，使用PreAuthorize的hasAuthority即可。
-     - SpringBoot脚手架自动生成的Lombok依赖有问题，记得换成以下格式，不然用不了
-     ```xml
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
-            <scope>provided</scope>
-        </dependency>
-     ```
+
+ - 总而言之，言而总之，角色权限控制时，在add集合时添加ROLE_ 前缀并且PreAuthorize中使用hasRole;
+    - 资源权限控制时，不添加ROLE_前缀，使用PreAuthorize的hasAuthority即可。
+ - SpringBoot脚手架自动生成的Lombok依赖有问题，记得换成以下格式，不然用不了
+
+```xml
+<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.32</version>
+    <scope>provided</scope>
+</dependency>
+```
