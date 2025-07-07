@@ -2,6 +2,7 @@ package cn.believesun.config;
 
 import cn.believesun.handler.MyAuthenticationFailureHandler;
 import cn.believesun.handler.MyAuthenticationSuccessHandler;
+import cn.believesun.handler.MyLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -50,6 +52,9 @@ public class SecurityConfig {
     @Autowired
     private MyAuthenticationFailureHandler failureHandler;
 
+    @Autowired
+    private MyLogoutSuccessHandler logoutSuccessHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, CorsConfigurationSource corsConfigurationSource) throws Exception {
         return httpSecurity
@@ -60,16 +65,24 @@ public class SecurityConfig {
                     cors.configurationSource(corsConfigurationSource);
                 })
                 .formLogin(formLogin -> {
-                    formLogin.loginPage("http://localhost:8081");
-                    // action 请求发向 /user/login
-                    formLogin.loginProcessingUrl("/user/login");
-                    formLogin.successHandler(successHandler);
-                    formLogin.failureHandler(failureHandler);
+                    formLogin
+                            .loginPage("http://localhost:8081")
+                            // action 请求发向 /user/login
+                            .loginProcessingUrl("/user/login")
+                            .successHandler(successHandler)
+                            .failureHandler(failureHandler);
+                })
+                .logout(logout -> {
+                    logout
+                            .logoutUrl("/user/logout")
+                            // 登出成功,SpringSecurity没有登出失败
+                            .logoutSuccessHandler(logoutSuccessHandler);
                 })
                 .authorizeHttpRequests(authorizeRequests -> {
-                    authorizeRequests.requestMatchers(HttpMethod.OPTIONS).permitAll();
-                    // 对所有请求进行拦截操作
-                    authorizeRequests.anyRequest().authenticated();
+                    authorizeRequests
+                            .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                            // 对所有请求进行拦截操作
+                            .anyRequest().authenticated();
                 })
                 // 由于前后端分离时的SESSION无法使用，所以我们这里直接禁用即可。还能节省内存
                 .sessionManagement(sessionManagement -> {
