@@ -12,7 +12,7 @@
 import axios from 'axios';
 import qs from 'qs';
 export default {
-  name: 'HelloWorld',
+  name: 'LoginVue',
   data() {
     return {
       username: '',
@@ -28,7 +28,20 @@ export default {
         password: this.password
       });
      await axios.post('http://localhost:8080/user/login', userInfo).then(response => {
-        console.log(response)
+        alert(response.data.msg);
+        if(response.data.code === 200){
+          // 响应正常
+          this.$router.push({
+            path: '/welcome',
+            query: {
+              userInfo: JSON.stringify(response.data.data)
+            }
+          })
+        }else{
+          // 清空输入框
+          this.username = '';
+          this.password = '';
+        }
       }).catch(error => {
         console.log(error)
       });
