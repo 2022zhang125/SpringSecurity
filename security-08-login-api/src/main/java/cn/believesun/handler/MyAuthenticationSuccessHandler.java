@@ -1,7 +1,7 @@
 package cn.believesun.handler;
 
-import cn.believesun.result.R;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.believesun.utils.R;
+import cn.hutool.json.JSONUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -12,13 +12,11 @@ import java.io.IOException;
 
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         response.setContentType("application/json;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_OK);
         // 这里的R对象使用@Build建造者模式的链式编程
-        String json = objectMapper.writeValueAsString(R.SUCCESS(authentication));
+        String json = JSONUtil.toJsonStr(R.SUCCESS("登录成功",200,authentication.getPrincipal()));
         response.getWriter().write(json);
     }
 }
