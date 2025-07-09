@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: security-10-login-api-jwt
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/springsecurity
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  data:
+    redis:
+      host: 47.94.108.74
+      port: 6379
+      password: BelieveSun77
+      database: 0
