@@ -21,12 +21,12 @@ public class ClueController {
     }
 
     @GetMapping("/api/clue/menu")
-    public String clueMenu(){
+    public String clueMenu() {
         return "ClueMenu";
     }
 
     @GetMapping("/api/clue/child")
-    public String clueChild(){
+    public String clueChild() {
         return "ClueChild";
     }
 
@@ -34,7 +34,7 @@ public class ClueController {
     @PreAuthorize("hasAuthority('clue:list')")
     // 总而言之，言而总之，角色权限控制时，在add集合时添加ROLE_ 前缀并且PreAuthorize中使用hasRole;
     // 资源权限控制时，不添加ROLE_前缀，使用PreAuthorize的hasAuthority即可。
-    public String clueList(){
+    public String clueList() {
         return "clueList";
     }
     // 剩下的不想写了，懂我意思就行......
