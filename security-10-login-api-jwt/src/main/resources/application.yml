@@ -13,7 +13,7 @@ spring:
 
   data:
     redis:
-      host: 47.94.108.74
-      port: 6379
-      password: BelieveSun77
-      database: 0
+      host:
+      port:
+      password:
+      database:
